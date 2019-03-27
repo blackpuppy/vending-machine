@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Acme.VendingMachine.Models;
+using Acme.VendingMachine.Web.Models;
 
-namespace Acme.VendingMachine.Controllers
+namespace Acme.VendingMachine.Web.Controllers
 {
     public class HomeController : Controller
     {

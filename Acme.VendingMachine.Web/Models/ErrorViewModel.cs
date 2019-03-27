@@ -1,6 +1,6 @@
 using System;
 
-namespace Acme.VendingMachine.Models
+namespace Acme.VendingMachine.Web.Models
 {
     public class ErrorViewModel
     {

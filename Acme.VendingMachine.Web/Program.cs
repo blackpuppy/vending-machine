@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Acme.VendingMachine
+namespace Acme.VendingMachine.Web
 {
     public class Program
     {
