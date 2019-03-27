@@ -7,6 +7,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C1451220-438
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.VendingMachine.Web", "Acme.VendingMachine.Web\Acme.VendingMachine.Web.csproj", "{14EB7014-8A1D-4483-9F3A-A8D405239563}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessLogic", "BusinessLogic", "{4DD7973B-20E5-412D-9421-B9A2CD2A7174}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccess", "DataAccess", "{1884A438-6B38-4423-B693-4D94C00D093E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{E3F156DF-5DD0-4DE3-9050-7C23F1A42C36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.VendingMachine.Model", "Acme.VendingMachine.Model\Acme.VendingMachine.Model.csproj", "{A9334F8B-227B-4C85-A0E8-7F915BFEBAD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +25,17 @@ Global
 		{14EB7014-8A1D-4483-9F3A-A8D405239563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14EB7014-8A1D-4483-9F3A-A8D405239563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14EB7014-8A1D-4483-9F3A-A8D405239563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9334F8B-227B-4C85-A0E8-7F915BFEBAD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9334F8B-227B-4C85-A0E8-7F915BFEBAD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9334F8B-227B-4C85-A0E8-7F915BFEBAD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9334F8B-227B-4C85-A0E8-7F915BFEBAD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{14EB7014-8A1D-4483-9F3A-A8D405239563} = {C1451220-4386-4736-AC43-13AB371DFEE0}
+		{A9334F8B-227B-4C85-A0E8-7F915BFEBAD3} = {E3F156DF-5DD0-4DE3-9050-7C23F1A42C36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D61952DA-A4F1-4A65-B26D-15AF2719BCD7}
