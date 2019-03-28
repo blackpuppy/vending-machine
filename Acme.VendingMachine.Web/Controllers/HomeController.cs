@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Acme.VendingMachine.Web.Models;
+using Acme.VendingMachine.BusinessLogic;
+using Acme.VendingMachine.Model;
 
 namespace Acme.VendingMachine.Web.Controllers
 {
@@ -12,7 +14,9 @@ namespace Acme.VendingMachine.Web.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            ProductBll bll = new ProductBll();
+            IList<Product> products = bll.GetAllProducts();
+            return View(products);
         }
 
         public IActionResult About()

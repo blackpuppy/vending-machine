@@ -7,7 +7,6 @@ namespace Acme.VendingMachine.BusinessLogic
 {
     public class ProductBll
     {
-
         private readonly ProductDal _dal = null;
 
         public ProductBll()
