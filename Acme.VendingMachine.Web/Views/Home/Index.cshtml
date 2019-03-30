@@ -4,6 +4,11 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div>
-    @await Component.InvokeAsync("ProductCatalog", new { })
+<div class="row">
+    <div class="col-sm-8">
+        <vc:product-catalog></vc:product-catalog>
+    </div>
+    <div class="col-sm-4">
+        Others
+    </div>
 </div>
