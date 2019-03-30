@@ -24,7 +24,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
+        <tr class="@(item.SoldOut ? "bg-danger text-white" : "bg-info text-dark")">
             <td>
                 @Html.DisplayFor(modelItem => item.ItemNo)
             </td>
@@ -34,7 +34,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td class="@(item.SoldOut ? "bg-gradient-danger text-white" : "bg-gradient-info text-dark")">
+            <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
         </tr>
