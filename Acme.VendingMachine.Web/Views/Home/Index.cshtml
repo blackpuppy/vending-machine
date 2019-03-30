@@ -4,40 +4,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr class="@(item.SoldOut ? "bg-danger text-white" : "bg-info text-dark")">
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+<div>
+    @await Component.InvokeAsync("ProductCatalog", new { })
+</div>
