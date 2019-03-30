@@ -13,11 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccess", "DataAccess", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{E3F156DF-5DD0-4DE3-9050-7C23F1A42C36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.VendingMachine.Model", "Acme.VendingMachine.Model\Acme.VendingMachine.Model.csproj", "{A9334F8B-227B-4C85-A0E8-7F915BFEBAD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.VendingMachine.Model", "Acme.VendingMachine.Model\Acme.VendingMachine.Model.csproj", "{A9334F8B-227B-4C85-A0E8-7F915BFEBAD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.VendingMachine.DataAccess", "Acme.VendingMachine.DataAccess\Acme.VendingMachine.DataAccess.csproj", "{142E87A0-9713-41EC-B3C5-E5BFDF1FB9CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.VendingMachine.DataAccess", "Acme.VendingMachine.DataAccess\Acme.VendingMachine.DataAccess.csproj", "{142E87A0-9713-41EC-B3C5-E5BFDF1FB9CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.VendingMachine.BusinessLogic", "Acme.VendingMachine.BusinessLogic\Acme.VendingMachine.BusinessLogic.csproj", "{4DCB21C2-4336-4510-BFF7-E13EE6595793}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Acme.VendingMachine.BusinessLogic", "Acme.VendingMachine.BusinessLogic\Acme.VendingMachine.BusinessLogic.csproj", "{4DCB21C2-4336-4510-BFF7-E13EE6595793}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acme.VendingMachine.BusinessLogic.Interface", "Acme.VendingMachine.BusinessLogic.Interface\Acme.VendingMachine.BusinessLogic.Interface.csproj", "{388B039C-C057-47C5-B939-D5149C3DB2DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{4DCB21C2-4336-4510-BFF7-E13EE6595793}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DCB21C2-4336-4510-BFF7-E13EE6595793}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DCB21C2-4336-4510-BFF7-E13EE6595793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{388B039C-C057-47C5-B939-D5149C3DB2DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{388B039C-C057-47C5-B939-D5149C3DB2DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{388B039C-C057-47C5-B939-D5149C3DB2DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{388B039C-C057-47C5-B939-D5149C3DB2DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{A9334F8B-227B-4C85-A0E8-7F915BFEBAD3} = {E3F156DF-5DD0-4DE3-9050-7C23F1A42C36}
 		{142E87A0-9713-41EC-B3C5-E5BFDF1FB9CE} = {1884A438-6B38-4423-B693-4D94C00D093E}
 		{4DCB21C2-4336-4510-BFF7-E13EE6595793} = {4DD7973B-20E5-412D-9421-B9A2CD2A7174}
+		{388B039C-C057-47C5-B939-D5149C3DB2DF} = {4DD7973B-20E5-412D-9421-B9A2CD2A7174}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D61952DA-A4F1-4A65-B26D-15AF2719BCD7}

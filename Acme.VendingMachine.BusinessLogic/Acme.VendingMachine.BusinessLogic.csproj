@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Acme.VendingMachine.BusinessLogic.Interface\Acme.VendingMachine.BusinessLogic.Interface.csproj" />
     <ProjectReference Include="..\Acme.VendingMachine.DataAccess\Acme.VendingMachine.DataAccess.csproj" />
   </ItemGroup>
 

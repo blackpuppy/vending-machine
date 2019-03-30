@@ -3,7 +3,7 @@ using Acme.VendingMachine.Model;
 
 namespace Acme.VendingMachine.BusinessLogic
 {
-    class CashBll
+    public class CashBll : ICashBll
     {
         private readonly CashDal _dal = null;
 

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>Acme.VendingMachine.BusinessLogic</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Acme.VendingMachine.Model\Acme.VendingMachine.Model.csproj" />
+  </ItemGroup>
+
+</Project>

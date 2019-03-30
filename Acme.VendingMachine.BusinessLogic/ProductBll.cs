@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Acme.VendingMachine.BusinessLogic
 {
-    public class ProductBll
+    public class ProductBll : IProductBll
     {
         private readonly ProductDal _dal = null;
 

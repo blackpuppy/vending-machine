@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Acme.VendingMachine.BusinessLogic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,8 +32,10 @@ namespace Acme.VendingMachine.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddScoped<IProductBll, ProductBll>();
+            services.AddScoped<ICashBll, CashBll>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
