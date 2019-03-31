@@ -10,7 +10,6 @@ namespace Acme.VendingMachine.Web.ViewComponents
     public class DisplayViewComponent : ViewComponent
     {
         private readonly IMachineBll _machineBll;
-        private IList<string> _messages = new List<string>();
 
         public DisplayViewComponent(IMachineBll MachineBll)
         {
