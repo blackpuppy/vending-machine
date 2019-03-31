@@ -11,6 +11,7 @@ namespace Acme.VendingMachine.Model
             Products = products;
             CashInHand = CashInHand;
 
+            _messages = new List<string>();
             SwitchState(MachineState.SelectProduct);
         }
 
@@ -33,7 +34,6 @@ namespace Acme.VendingMachine.Model
             switch (State)
             {
                 case MachineState.SelectProduct:
-                    _messages = new List<string>();
                     _messages.Add("Please select a product:");
                     ClearProductSelected();
                     break;
@@ -42,6 +42,15 @@ namespace Acme.VendingMachine.Model
                     break;
                 case MachineState.SelectPaymentMethod:
                     AddMessage("Please select a payment method (1-Cash 2-Credit Card):");
+                    break;
+                case MachineState.EnterCash:
+                    AddMessage("Please put cash in the cash slot:");
+                    break;
+                case MachineState.EnterCreditCardNumber:
+                    AddMessage("Please enter credit card number:");
+                    break;
+                case MachineState.ConfirmTransaction:
+                    AddMessage("Are you sure you want to make the purchase?");
                     break;
             }
         }
@@ -58,6 +67,9 @@ namespace Acme.VendingMachine.Model
                     break;
                 case MachineState.SelectPaymentMethod:
                     SelectPaymentMethod();
+                    break;
+                case MachineState.EnterCreditCardNumber:
+                    EnterCreditCard();
                     break;
             }
         }
@@ -101,7 +113,8 @@ namespace Acme.VendingMachine.Model
         {
             get
             {
-                List<string> messagesToDisplay = _messages.TakeLast(3).ToList();
+                int rowsToTake = string.IsNullOrEmpty(Input) ? 3 : 2;
+                List<string> messagesToDisplay = _messages.TakeLast(rowsToTake).ToList();
                 string message = string.Join(Environment.NewLine, messagesToDisplay);
 
                 if (!string.IsNullOrEmpty(Input))
@@ -149,14 +162,12 @@ namespace Acme.VendingMachine.Model
             if (selected == null)
             {
                 AddMessage("Error: Product Not Found!");
-                AddMessage("Please select a product:");
-                ClearInput();
+                SwitchState(MachineState.SelectProduct);
             }
             else if (selected.Quantity == 0)
             {
                 AddMessage("Error: Product Sold Out!");
-                AddMessage("Please select a product:");
-                ClearInput();
+                SwitchState(MachineState.SelectProduct);
             }
             else
             {
@@ -196,7 +207,6 @@ namespace Acme.VendingMachine.Model
             {
                 AddMessage("Error: Not Enough Stock!");
                 SwitchState(MachineState.EnterQuantity);
-                ClearInput();
             }
             else
             {
@@ -234,16 +244,49 @@ namespace Acme.VendingMachine.Model
             EnsureTransaction();
 
             int choice = int.Parse(Input);
-            if (choice < 1 || choice > 2)
+            switch (choice)
             {
-                AddMessage("Error: Wrong Payment Method!");
-                SwitchState(MachineState.SelectPaymentMethod);
+                case 1:  // Cash
+                    Transaction.SelectPaymentMethod(PaymentMethod.Cash);
+                    AddMessage(string.Format("Please put in enough cash for the amount Due: {0}", Transaction.AmountDue));
+                    SwitchState(MachineState.EnterCash);
+                    break;
+                case 2:  // Credit Card
+                    Transaction.SelectPaymentMethod(PaymentMethod.CreditCard);
+                    SwitchState(MachineState.EnterCreditCardNumber);
+                    break;
+                default:
+                    AddMessage("Error: Wrong Payment Method!");
+                    SwitchState(MachineState.SelectPaymentMethod);
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region Credit Card
+
+        private void EnterCreditCard()
+        {
+            if (State != MachineState.EnterCreditCardNumber)
+            {
+                return;
+            }
+
+            AppendMessage(string.Format(" {0}", Input));
+
+            EnsureTransaction();
+
+            Transaction.Payment = new CreditCardPayment(Input);
+            if (!Transaction.Validate())
+            {
+                AddMessage("Error: Invalid Credit Card!");
+                SwitchState(MachineState.EnterCreditCardNumber);
             }
             else
             {
-                Transaction.Quantity = choice;
-                AddMessage(string.Format("Amount Due: {0}", Transaction.AmountDue));
-                SwitchState(MachineState.SelectPaymentMethod);
+                AddMessage(string.Format("You will be charged {0}", Transaction.CalculateTotalAmountDue()));
+                SwitchState(MachineState.ConfirmTransaction);
             }
         }
 
