@@ -14,9 +14,7 @@ namespace Acme.VendingMachine.Web.Controllers
     {
         public IActionResult Index()
         {
-            ProductBll bll = new ProductBll();
-            IList<Product> products = bll.GetAllProducts();
-            return View(products);
+            return View();
         }
 
         public IActionResult About()
