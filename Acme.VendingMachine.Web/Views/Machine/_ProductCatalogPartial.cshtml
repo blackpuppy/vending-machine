@@ -21,7 +21,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr class="@(item.SoldOut ? "bg-danger text-white" : "bg-info text-dark")">
+            <tr class="@(item.SoldOut ? "bg-danger text-muted" : (item.Seleted ? "bg-success" : "bg-info text-dark"))">
                 <td>
                     @Html.DisplayFor(modelItem => item.ItemNo)
                 </td>

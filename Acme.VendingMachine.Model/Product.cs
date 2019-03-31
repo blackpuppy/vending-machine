@@ -10,5 +10,7 @@ namespace Acme.VendingMachine.Model
         public int Quantity { get; set; }
 
         public bool SoldOut => this.Quantity == 0;
+
+        public bool Seleted { get; set; }
     }
 }

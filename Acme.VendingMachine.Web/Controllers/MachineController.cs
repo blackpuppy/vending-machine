@@ -22,11 +22,97 @@ namespace Acme.VendingMachine.Web.Controllers
             return View(machine);
         }
 
-        public async Task<IActionResult> Process7Async()
+        #region Numbers
+
+        public IActionResult Process0()
         {
-            var machine = await Task.Run(() => _machineBll.GetMachine());
-            machine.AppendMessage("7");
-            return View("~/Views/Home/Index", machine);
+            return ProcessNumber("0");
         }
+
+        public IActionResult Process1()
+        {
+            return ProcessNumber("1");
+        }
+
+        public IActionResult Process2()
+        {
+            return ProcessNumber("2");
+        }
+
+        public IActionResult Process3()
+        {
+            return ProcessNumber("3");
+        }
+
+        public IActionResult Process4()
+        {
+            return ProcessNumber("4");
+        }
+
+        public IActionResult Process5()
+        {
+            return ProcessNumber("5");
+        }
+
+        public IActionResult Process6()
+        {
+            return ProcessNumber("6");
+        }
+
+        public IActionResult Process7()
+        {
+            return ProcessNumber("7");
+        }
+
+        public IActionResult Process8()
+        {
+            return ProcessNumber("8");
+        }
+
+        public IActionResult Process9()
+        {
+            return ProcessNumber("9");
+        }
+
+        private IActionResult ProcessNumber(string number)
+        {
+            _machineBll.EnterNumber(number);
+
+            return RedirectToAction("Index");
+        }
+
+        #endregion
+
+        #region Function Keys
+
+        public IActionResult ProcessDel()
+        {
+            _machineBll.Delete();
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult ProcessClear()
+        {
+            _machineBll.Clear();
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult ProcessDone()
+        {
+            _machineBll.Done();
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult ProcessCancel()
+        {
+            _machineBll.Cancel();
+
+            return RedirectToAction("Index");
+        }
+
+        #endregion
     }
 }
