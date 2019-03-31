@@ -9,8 +9,9 @@ namespace Acme.VendingMachine.Model
         public string Name { get; set; }
         public int Quantity { get; set; }
 
-        public bool SoldOut => this.Quantity == 0;
-
         public bool Seleted { get; set; }
+
+        public bool SoldOut => Quantity == 0;
+        public string DisplayQuantity => (Quantity == 0 ? "Sold Out" : Quantity.ToString());
     }
 }
