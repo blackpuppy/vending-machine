@@ -11,5 +11,8 @@
     <div class="col-sm-6">
         @await Html.PartialAsync("_DisplayPartial", Model)
         <partial name="_NumPadPartial" />
+        <if include-if="@(Model.State == Acme.VendingMachine.Model.MachineState.CollectCash)">
+            @await Html.PartialAsync("_CashCollectorPartial", Model.CashReceived.CashSets)
+        </if>
     </div>
 </div>

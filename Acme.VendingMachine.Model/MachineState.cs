@@ -9,7 +9,7 @@ namespace Acme.VendingMachine.Model
         SelectProduct,
         EnterQuantity,
         SelectPaymentMethod,
-        EnterCash,
+        CollectCash,
         EnterCreditCardNumber,
         ConfirmTransaction,
         ReturnChange,

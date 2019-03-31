@@ -11,14 +11,14 @@ namespace Acme.VendingMachine.DataAccess
 
         static CashDal()
         {
-            _cashRegister = new CashRegister();
-            _cashRegister.CashSets = new List<CashSet>(new CashSet[] {
-                new CashSet() { Denomination = CashDenomination.NICKEL, Quantity=5 },
-                new CashSet() { Denomination = CashDenomination.DIME, Quantity=5 },
-                new CashSet() { Denomination = CashDenomination.QUARTER, Quantity=5 },
-                new CashSet() { Denomination = CashDenomination.DOLLAR, Quantity=5 },
-                new CashSet() { Denomination = CashDenomination.FIVE_DOLLAR, Quantity=5 },
-            });
+            _cashRegister = new CashRegister(CashDenomination.ALL_DONOMINATIONS, 5);
+            //_cashRegister.CashSets = new List<CashSet>(new CashSet[] {
+            //    new CashSet() { Denomination = CashDenomination.NICKEL, Quantity=5 },
+            //    new CashSet() { Denomination = CashDenomination.DIME, Quantity=5 },
+            //    new CashSet() { Denomination = CashDenomination.QUARTER, Quantity=5 },
+            //    new CashSet() { Denomination = CashDenomination.DOLLAR, Quantity=5 },
+            //    new CashSet() { Denomination = CashDenomination.FIVE_DOLLAR, Quantity=5 },
+            //});
         }
 
         #endregion

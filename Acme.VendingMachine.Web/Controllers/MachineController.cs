@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Acme.VendingMachine.BusinessLogic;
+using Acme.VendingMachine.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Acme.VendingMachine.Web.Controllers
@@ -109,6 +110,17 @@ namespace Acme.VendingMachine.Web.Controllers
         public IActionResult ProcessCancel()
         {
             _machineBll.Cancel();
+
+            return RedirectToAction("Index");
+        }
+
+        #endregion
+
+        #region Collect Cash
+
+        public IActionResult CollectCash(IList<CashSet> cashSets)
+        {
+            _machineBll.CollectCash(cashSets);
 
             return RedirectToAction("Index");
         }

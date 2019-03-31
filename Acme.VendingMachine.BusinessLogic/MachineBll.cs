@@ -1,4 +1,5 @@
-﻿using Acme.VendingMachine.DataAccess;
+﻿using System.Collections.Generic;
+using Acme.VendingMachine.DataAccess;
 using Acme.VendingMachine.Model;
 
 namespace Acme.VendingMachine.BusinessLogic
@@ -45,6 +46,12 @@ namespace Acme.VendingMachine.BusinessLogic
         {
             Machine machine = _dal.Get();
             machine.Cancel();
+        }
+
+        public void CollectCash(IList<CashSet> cashSets)
+        {
+            Machine machine = _dal.Get();
+            machine.CollectCash(cashSets);
         }
     }
 }

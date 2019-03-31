@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Acme.VendingMachine.Model.CashSet>
+
+<h3>Cash Collector</h3>
+<form asp-controller="Machine" asp-action="CollectCash">
+    <div class="row">
+        <div class="col-sm-5">
+            @Html.DisplayNameFor(model => model.Denomination.Name)
+        </div>
+        <div class="col-sm-5">
+            @Html.DisplayNameFor(model => model.Quantity)
+        </div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div>
+            <div class="col-sm-5">
+                @Html.DisplayFor(modelItem => item.Denomination.Name)
+                (
+                @Html.DisplayFor(modelItem => item.Denomination.Amount)
+                )
+            </div>
+            <div class="col-sm-5">
+                @Html.EditorFor(modelItem => item.Quantity)
+            </div>
+        </div>
+    }
+    <div class="row">
+        <input type="submit" value="Submit" class="col-sm-offset-2 col-sm-2 btn-success" />
+        <input type="reset" class="col-sm-offset-2 col-sm-2 btn-danger" />
+    </div>
+</form>

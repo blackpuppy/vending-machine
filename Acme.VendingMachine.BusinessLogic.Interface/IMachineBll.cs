@@ -1,4 +1,5 @@
-﻿using Acme.VendingMachine.Model;
+﻿using System.Collections.Generic;
+using Acme.VendingMachine.Model;
 
 namespace Acme.VendingMachine.BusinessLogic
 {
@@ -10,5 +11,6 @@ namespace Acme.VendingMachine.BusinessLogic
         void Clear();
         void Done();
         void Cancel();
+        void CollectCash(IList<CashSet> cashSets);
     }
 }

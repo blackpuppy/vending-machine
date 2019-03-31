@@ -9,7 +9,10 @@ namespace Acme.VendingMachine.Model
         public Machine(IList<Product> products, CashRegister cashInHand)
         {
             Products = products;
-            CashInHand = CashInHand;
+            CashInHand = cashInHand;
+
+            CashReceived = new CashRegister(CashDenomination.ALL_DONOMINATIONS);
+            CashChange = new CashRegister(CashDenomination.ALL_DONOMINATIONS);
 
             _messages = new List<string>();
             SwitchState(MachineState.SelectProduct);
@@ -34,8 +37,8 @@ namespace Acme.VendingMachine.Model
             switch (State)
             {
                 case MachineState.SelectProduct:
-                    _messages.Add("Please select a product:");
                     ClearProductSelected();
+                    _messages.Add("Please select a product:");
                     break;
                 case MachineState.EnterQuantity:
                     AddMessage("Please enter quantity:");
@@ -43,8 +46,8 @@ namespace Acme.VendingMachine.Model
                 case MachineState.SelectPaymentMethod:
                     AddMessage("Please select a payment method (1-Cash 2-Credit Card):");
                     break;
-                case MachineState.EnterCash:
-                    AddMessage("Please put cash in the cash slot:");
+                case MachineState.CollectCash:
+                    AddMessage(string.Format("Please put cash in the cash collector for the amount Due: {0}", Transaction.AmountDue));
                     break;
                 case MachineState.EnterCreditCardNumber:
                     AddMessage("Please enter credit card number:");
@@ -251,8 +254,7 @@ namespace Acme.VendingMachine.Model
             {
                 case 1:  // Cash
                     Transaction.SelectPaymentMethod(PaymentMethod.Cash);
-                    AddMessage(string.Format("Please put in enough cash for the amount Due: {0}", Transaction.AmountDue));
-                    SwitchState(MachineState.EnterCash);
+                    SwitchState(MachineState.CollectCash);
                     break;
                 case 2:  // Credit Card
                     Transaction.SelectPaymentMethod(PaymentMethod.CreditCard);
@@ -262,6 +264,29 @@ namespace Acme.VendingMachine.Model
                     AddMessage("Error: Wrong Payment Method!");
                     SwitchState(MachineState.SelectPaymentMethod);
                     break;
+            }
+        }
+
+        #endregion
+
+        #region Cash
+
+        public void CollectCash(IList<CashSet> cashSets)
+        {
+            if (State != MachineState.CollectCash)
+            {
+                return;
+            }
+
+            CashReceived.CashSets = cashSets;
+            if (CashReceived.Amount < Transaction.AmountDue)
+            {
+                AddMessage("Error: Not Enough Cash!");
+                SwitchState(MachineState.CollectCash);
+            } else
+            {
+                // calculat change
+                SwitchState(MachineState.ConfirmTransaction);
             }
         }
 
