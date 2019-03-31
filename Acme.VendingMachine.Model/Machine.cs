@@ -88,7 +88,8 @@ namespace Acme.VendingMachine.Model
         {
             get
             {
-                string message = string.Join(Environment.NewLine, this._messages);
+                List<string> messagesToDisplay = this._messages.TakeLast(3).ToList();
+                string message = string.Join(Environment.NewLine, messagesToDisplay);
 
                 if (!string.IsNullOrEmpty(this.Input))
                 {

@@ -23,16 +23,44 @@
         {
             <tr class="@(item.SoldOut ? "bg-danger text-muted" : (item.Seleted ? "bg-success" : "bg-info text-dark"))">
                 <td>
-                    @Html.DisplayFor(modelItem => item.ItemNo)
+                    <if include-if="@(item.Seleted)">
+                        <strong>
+                            @Html.DisplayFor(modelItem => item.ItemNo)
+                        </strong>
+                    </if>
+                    <if exclude-if="@(item.Seleted)">
+                        @Html.DisplayFor(modelItem => item.ItemNo)
+                    </if>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    <if include-if="@(item.Seleted)">
+                        <strong>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </strong>
+                    </if>
+                    <if exclude-if="@(item.Seleted)">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </if>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price)
+                    <if include-if="@(item.Seleted)">
+                        <strong>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </strong>
+                    </if>
+                    <if exclude-if="@(item.Seleted)">
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </if>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
+                    <if include-if="@(item.Seleted)">
+                        <strong>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </strong>
+                    </if>
+                    <if exclude-if="@(item.Seleted)">
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </if>
                 </td>
             </tr>
         }
