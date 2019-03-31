@@ -8,7 +8,7 @@ namespace Acme.VendingMachine.Model
     {
         SelectProduct,
         EnterQuantity,
-        MakePayment,
+        SelectPaymentMethod,
         ReturnChange,
     }
 }

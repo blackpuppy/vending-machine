@@ -1,9 +1,12 @@
 ﻿using Acme.VendingMachine.Model;
+using System.Collections.Generic;
 
 namespace Acme.VendingMachine.DataAccess
 {
     public class MachineDal
     {
+        private ProductDal _prodductDal;
+
         #region Mock cash register
 
         static Machine _machine;
@@ -13,14 +16,13 @@ namespace Acme.VendingMachine.DataAccess
             ProductDal prodductDal = new ProductDal();
             CashDal cashDal = new CashDal();
 
-            _machine = new Machine();
-            _machine.Products = prodductDal.GetAllProducts();
-            _machine.CashInHand = cashDal.GetAllCash();
+            IList<Product> products = prodductDal.GetAllProducts();
+            CashRegister cashInHand = cashDal.GetAllCash();
+
+            _machine = new Machine(products, cashInHand);
         }
 
         #endregion
-
-        private ProductDal _prodductDal;
 
         public MachineDal(ProductDal prodductDal)
         {

@@ -6,9 +6,12 @@ namespace Acme.VendingMachine.Model
 {
     public class Machine
     {
-        public Machine()
+        public Machine(IList<Product> products, CashRegister cashInHand)
         {
-            this.SwitchState(MachineState.SelectProduct);
+            Products = products;
+            CashInHand = CashInHand;
+
+            SwitchState(MachineState.SelectProduct);
         }
 
         public IList<Product> Products { get; set; }
@@ -24,34 +27,44 @@ namespace Acme.VendingMachine.Model
 
         public void SwitchState(MachineState newState)
         {
-            this.ClearInput();
-            this.State = newState;
+            ClearInput();
+            State = newState;
 
-            switch (this.State)
+            switch (State)
             {
                 case MachineState.SelectProduct:
-                    this._messages = new List<string>();
-                    this._messages.Add("Please select a product:");
+                    _messages = new List<string>();
+                    _messages.Add("Please select a product:");
+                    ClearProductSelected();
                     break;
                 case MachineState.EnterQuantity:
-                    this.AddMessage("Please enter quantity:");
+                    AddMessage("Please enter quantity:");
+                    break;
+                case MachineState.SelectPaymentMethod:
+                    AddMessage("Please select a payment method (1-Cash 2-Credit Card):");
                     break;
             }
         }
 
         public void Done()
         {
-            switch (this.State)
+            switch (State)
             {
                 case MachineState.SelectProduct:
-                    this.SelectProduct();
+                    SelectProduct();
+                    break;
+                case MachineState.EnterQuantity:
+                    EnterQuantity();
+                    break;
+                case MachineState.SelectPaymentMethod:
+                    SelectPaymentMethod();
                     break;
             }
         }
 
         public void Cancel()
         {
-            this.SwitchState(MachineState.SelectProduct);
+            SwitchState(MachineState.SelectProduct);
         }
 
         #endregion
@@ -62,20 +75,20 @@ namespace Acme.VendingMachine.Model
 
         public void AddInput(string number)
         {
-            this.Input += number;
+            Input += number;
         }
 
         public void DeleteInput()
         {
-            if (!string.IsNullOrEmpty(this.Input))
+            if (!string.IsNullOrEmpty(Input))
             {
-                this.Input = this.Input.Substring(0, this.Input.Length - 1);
+                Input = Input.Substring(0, Input.Length - 1);
             }
         }
 
         public void ClearInput()
         {
-            this.Input = null;
+            Input = null;
         }
 
         #endregion
@@ -88,12 +101,12 @@ namespace Acme.VendingMachine.Model
         {
             get
             {
-                List<string> messagesToDisplay = this._messages.TakeLast(3).ToList();
+                List<string> messagesToDisplay = _messages.TakeLast(3).ToList();
                 string message = string.Join(Environment.NewLine, messagesToDisplay);
 
-                if (!string.IsNullOrEmpty(this.Input))
+                if (!string.IsNullOrEmpty(Input))
                 {
-                    message += " " + this.Input;
+                    message += " " + Input;
                 }
 
                 return message;
@@ -102,11 +115,11 @@ namespace Acme.VendingMachine.Model
 
         public void AppendMessage(string message)
         {
-            int count = this._messages.Count;
+            int count = _messages.Count;
             if (count > 0)
             {
-                string lastMsg = this._messages[this._messages.Count - 1];
-                this._messages[this._messages.Count - 1] = lastMsg + message;
+                string lastMsg = _messages[_messages.Count - 1];
+                _messages[_messages.Count - 1] = lastMsg + message;
             }
             else
             {
@@ -116,7 +129,7 @@ namespace Acme.VendingMachine.Model
 
         public void AddMessage(string message)
         {
-            this._messages.Add(message);
+            _messages.Add(message);
         }
 
         #endregion
@@ -125,31 +138,112 @@ namespace Acme.VendingMachine.Model
 
         public void SelectProduct()
         {
-            if (this.State != MachineState.SelectProduct)
+            if (State != MachineState.SelectProduct)
             {
                 return;
             }
 
-            Product selected = this.Products.FirstOrDefault(p => p.ItemNo == int.Parse(this.Input));
+            AppendMessage(string.Format(" {0}", Input));
+
+            Product selected = Products.FirstOrDefault(p => p.ItemNo == int.Parse(Input));
             if (selected == null)
             {
-                this.AddMessage("Error: Product Not Found!");
-                this.AddMessage("Please select a product:");
-                this.ClearInput();
+                AddMessage("Error: Product Not Found!");
+                AddMessage("Please select a product:");
+                ClearInput();
             }
             else if (selected.Quantity == 0)
             {
-                this.AddMessage("Error: Product Sold Out!");
-                this.AddMessage("Please select a product:");
-                this.ClearInput();
+                AddMessage("Error: Product Sold Out!");
+                AddMessage("Please select a product:");
+                ClearInput();
             }
             else
             {
-                this.Products.All(p => p.Seleted = false);
+                ClearProductSelected();
                 selected.Seleted = true;
-                this.AddMessage(string.Format("# {0} {1} selected!", selected.ItemNo, selected.Name));
+                AddMessage(string.Format("# {0} {1} selected!", selected.ItemNo, selected.Name));
 
-                this.SwitchState(MachineState.EnterQuantity);
+                EnsureTransaction();
+                Transaction.Product = selected;
+
+                SwitchState(MachineState.EnterQuantity);
+            }
+        }
+
+        private void ClearProductSelected()
+        {
+            Products.All(p => p.Seleted = false);
+        }
+
+        #endregion
+
+        #region Enter Quantity
+
+        public void EnterQuantity()
+        {
+            if (State != MachineState.EnterQuantity)
+            {
+                return;
+            }
+
+            AppendMessage(string.Format(" {0}", Input));
+
+            EnsureTransaction();
+
+            int quantity = int.Parse(Input);
+            if (quantity > Transaction.Product.Quantity)
+            {
+                AddMessage("Error: Not Enough Stock!");
+                SwitchState(MachineState.EnterQuantity);
+                ClearInput();
+            }
+            else
+            {
+                Transaction.Quantity = quantity;
+                AddMessage(string.Format("Amount Due: {0}", Transaction.AmountDue));
+                SwitchState(MachineState.SelectPaymentMethod);
+            }
+        }
+
+        #endregion
+
+        #region Transaction
+
+        private void EnsureTransaction()
+        {
+            if (Transaction == null)
+            {
+                Transaction = new Transaction();
+            }
+        }
+
+        #endregion
+
+        #region Payment Method
+
+        private void SelectPaymentMethod()
+        {
+            if (State != MachineState.SelectPaymentMethod)
+            {
+                return;
+            }
+
+            AppendMessage(string.Format(" {0}", Input));
+
+            EnsureTransaction();
+
+            int choice = int.Parse(Input);
+            if (choice < 1 || choice > 2)
+            {
+                AddMessage("Error: Wrong Payment Method!");
+                SwitchState(MachineState.SelectPaymentMethod);
+            }
+            else
+            {
+                Transaction.Quantity = choice;
+                AddMessage(string.Format("Amount Due: {0}", Transaction.AmountDue));
+                SwitchState(MachineState.SelectPaymentMethod);
             }
         }
 
