@@ -10,7 +10,8 @@
         @await Html.PartialAsync("_ProductCatalogPartial", Model.Products)
     </div>
     <div class="col-sm-4">
-        <vc:display></vc:display>
+        @*<vc:display></vc:display>*@
+        @await Html.PartialAsync("_DisplayPartial", Model)
         <partial name="_NumPadPartial" />
     </div>
 </div>
