@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Acme.VendingMachine.Model
+﻿namespace Acme.VendingMachine.Model
 {
     public class Transaction
     {
@@ -67,6 +65,7 @@ namespace Acme.VendingMachine.Model
         public void Confirm()
         {
             int amountPaid = Payment.MakePayment(TotalAmountDue);
+            Product.Quantity = Product.Quantity - Quantity;
         }
     }
 }

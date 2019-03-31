@@ -309,6 +309,7 @@ namespace Acme.VendingMachine.Model
 
             AddMessage(string.Format("Total amount of {0} paid.", Transaction.TotalAmountDue));
             AddMessage("Dispensing ...");
+            AddMessage("");
             SwitchState(MachineState.SelectProduct);
         }
 
