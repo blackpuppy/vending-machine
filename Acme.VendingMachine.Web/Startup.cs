@@ -36,6 +36,7 @@ namespace Acme.VendingMachine.Web
 
             services.AddScoped<IProductBll, ProductBll>();
             services.AddScoped<ICashBll, CashBll>();
+            services.AddScoped<IMachineBll, MachineBll>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
