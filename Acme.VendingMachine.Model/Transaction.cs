@@ -1,4 +1,6 @@
-﻿namespace Acme.VendingMachine.Model
+﻿using System;
+
+namespace Acme.VendingMachine.Model
 {
     public class Transaction
     {
@@ -42,7 +44,15 @@
             return Payment.Validate();
         }
 
-        public int CalculateTotalAmountDue()
+        public int TotalAmountDue
+        {
+            get
+            {
+                return CalculateTotalAmountDue();
+            }
+        }
+
+        private int CalculateTotalAmountDue()
         {
             int amountDue = AmountDue;
 
@@ -52,6 +62,11 @@
             }
 
             return amountDue;
+        }
+
+        public void Confirm()
+        {
+            int amountPaid = Payment.MakePayment(TotalAmountDue);
         }
     }
 }

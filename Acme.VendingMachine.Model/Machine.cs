@@ -71,6 +71,9 @@ namespace Acme.VendingMachine.Model
                 case MachineState.EnterCreditCardNumber:
                     EnterCreditCard();
                     break;
+                case MachineState.ConfirmTransaction:
+                    ConfirmTransaction();
+                    break;
             }
         }
 
@@ -113,7 +116,7 @@ namespace Acme.VendingMachine.Model
         {
             get
             {
-                int rowsToTake = string.IsNullOrEmpty(Input) ? 3 : 2;
+                int rowsToTake = string.IsNullOrEmpty(Input) ? 5 : 4;
                 List<string> messagesToDisplay = _messages.TakeLast(rowsToTake).ToList();
                 string message = string.Join(Environment.NewLine, messagesToDisplay);
 
@@ -285,9 +288,28 @@ namespace Acme.VendingMachine.Model
             }
             else
             {
-                AddMessage(string.Format("You will be charged {0}", Transaction.CalculateTotalAmountDue()));
+                AddMessage(string.Format("You will be charged {0}", Transaction.TotalAmountDue));
                 SwitchState(MachineState.ConfirmTransaction);
             }
+        }
+
+        #endregion
+
+        #region Confirm Transaction
+
+        private void ConfirmTransaction()
+        {
+            if (State != MachineState.ConfirmTransaction)
+            {
+                return;
+            }
+
+            EnsureTransaction();
+            Transaction.Confirm();
+
+            AddMessage(string.Format("Total amount of {0} paid.", Transaction.TotalAmountDue));
+            AddMessage("Dispensing ...");
+            SwitchState(MachineState.SelectProduct);
         }
 
         #endregion
