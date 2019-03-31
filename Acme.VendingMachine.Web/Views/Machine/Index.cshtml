@@ -1,0 +1,16 @@
+﻿@model Acme.VendingMachine.Model.Machine
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-sm-8">
+        @*<vc:product-catalog></vc:product-catalog>*@
+        @await Html.PartialAsync("_ProductCatalogPartial", Model.Products)
+    </div>
+    <div class="col-sm-4">
+        <vc:display></vc:display>
+        <partial name="_NumPadPartial" />
+    </div>
+</div>

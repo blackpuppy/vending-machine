@@ -15,4 +15,10 @@
     <ProjectReference Include="..\Acme.VendingMachine.BusinessLogic\Acme.VendingMachine.BusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Machine\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>
