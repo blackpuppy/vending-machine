@@ -22,7 +22,7 @@ namespace Acme.VendingMachine.DataAccess
                 new Product() { ItemNo = 316, Price = 589, Name = "Drunken steak", Quantity = 5 },
                 new Product() { ItemNo = 325, Price = 469, Name = "Sweat and sour carp", Quantity = 5 },
                 new Product() { ItemNo = 333, Price = 279, Name = "Cucumber with egg", Quantity = 5 },
-                new Product() { ItemNo = 706, Price = 429, Name = "Snow fungus soup", Quantity = 5 },
+                new Product() { ItemNo = 706, Price = 459, Name = "Snow fungus soup", Quantity = 5 },
                 new Product() { ItemNo = 801, Price = 119, Name = "Red Tea", Quantity = 5 },
                 new Product() { ItemNo = 805, Price = 129, Name = "Milk Tea", Quantity = 5 },
             });

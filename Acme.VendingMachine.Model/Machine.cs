@@ -283,9 +283,14 @@ namespace Acme.VendingMachine.Model
             {
                 AddMessage("Error: Not Enough Cash!");
                 SwitchState(MachineState.CollectCash);
-            } else
+            }
+            else
             {
+                AddMessage(string.Format("Received: {0}", CashReceived.Amount));
+
                 // calculat change
+                AddMessage(string.Format("Change: {0}", CashReceived.Amount - Transaction.AmountDue));
+
                 SwitchState(MachineState.ConfirmTransaction);
             }
         }
