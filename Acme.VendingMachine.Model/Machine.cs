@@ -347,7 +347,14 @@ namespace Acme.VendingMachine.Model
             Transaction.Confirm();
 
             AddMessage(string.Format("Total amount of {0} paid.", Transaction.TotalAmountDue));
-            AddMessage("Dispensing ...");
+            if(Transaction.PaymentMetthod == PaymentMethod.Cash)
+            {
+                AddMessage("Dispensing Good(s) and Change ... Please collect.");
+            }
+            else
+            {
+                AddMessage("Dispensing Good(s) ... Please collect.");
+            }
             AddMessage("");
             SwitchState(MachineState.SelectProduct);
         }

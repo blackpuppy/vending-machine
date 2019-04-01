@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Acme.VendingMachine.Model.CashSet>
 
-<h3>Cash Collector</h3>
+<h3>Cash Receiiiiiver</h3>
 <form asp-controller="Machine" asp-action="CollectCash">
     <div class="row">
         <div class="col-sm-5">
@@ -21,11 +21,8 @@
                 )
                 <input type="hidden" name="cashSets[@i].Denomination.Name" value="@item.Denomination.Name" />
                 <input type="hidden" name="cashSets[@i].Denomination.Amount" value="@item.Denomination.Amount" />
-                @*@Html.HiddenFor(modelItem => item.Denomination.Name, new { Value = item.Denomination.Name })
-                @Html.HiddenFor(modelItem => item.Denomination.Amount, new { Value = item.Denomination.Amount })*@
             </div>
             <div class="col-sm-5">
-                @*@Html.EditorFor(modelItem => item.Quantity)*@
                 <input class="text-box single-line" data-val="true" data-val-required="The Quantity field is required." 
                        id="item_Quantity[@i]" name="cashSets[@i].Quantity" type="number" value="@item.Quantity" />
             </div>

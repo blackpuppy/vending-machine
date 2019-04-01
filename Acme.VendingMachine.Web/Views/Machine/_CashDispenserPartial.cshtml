@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Acme.VendingMachine.Model.CashSet>
+
+<h3>Cash Dispenser</h3>
+<div class="row">
+    <div class="col-sm-5">
+        @Html.DisplayNameFor(model => model.Denomination.Name)
+    </div>
+    <div class="col-sm-5">
+        @Html.DisplayNameFor(model => model.Quantity)
+    </div>
+</div>
+@foreach (var item in Model)
+{
+    <div>
+        <div class="col-sm-5">
+            @Html.DisplayFor(modelItem => item.Denomination.Name)
+            (
+            @Html.DisplayFor(modelItem => item.Denomination.Amount)
+            )
+        </div>
+        <div class="col-sm-5">
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </div>
+    </div>
+}

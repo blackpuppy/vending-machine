@@ -10,9 +10,16 @@
     </div>
     <div class="col-sm-6">
         @await Html.PartialAsync("_DisplayPartial", Model)
+
         <partial name="_NumPadPartial" />
+
         <if include-if="@(Model.State == Acme.VendingMachine.Model.MachineState.CollectCash)">
-            @await Html.PartialAsync("_CashCollectorPartial", Model.CashReceived.CashSets)
+            @await Html.PartialAsync("_CashReceiverPartial", Model.CashReceived.CashSets)
+        </if>
+
+        <if include-if="@(Model.State == Acme.VendingMachine.Model.MachineState.ConfirmTransaction
+            && Model.Transaction.PaymentMetthod == Acme.VendingMachine.Model.PaymentMethod.Cash)">
+            @await Html.PartialAsync("_CashDispenserPartial", Model.CashChange.CashSets)
         </if>
     </div>
 </div>
