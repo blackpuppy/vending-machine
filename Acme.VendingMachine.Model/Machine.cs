@@ -288,8 +288,17 @@ namespace Acme.VendingMachine.Model
             {
                 AddMessage(string.Format("Received: {0}", CashReceived.Amount));
 
-                // calculat change
-                AddMessage(string.Format("Change: {0}", CashReceived.Amount - Transaction.AmountDue));
+                EnsureTransaction();
+
+                // calculate change
+                CashPayment payment = new CashPayment(CashInHand, CashReceived);
+                Transaction.Payment = payment;
+
+                payment.CalculateTotalAmountDue(Transaction.AmountDue);
+                payment.CalculateChange();
+
+                CashChange = payment.CashChange;
+                AddMessage(string.Format("Change: {0}", CashChange.Amount));
 
                 SwitchState(MachineState.ConfirmTransaction);
             }
