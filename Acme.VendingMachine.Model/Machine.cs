@@ -38,6 +38,8 @@ namespace Acme.VendingMachine.Model
             {
                 case MachineState.SelectProduct:
                     ClearProductSelected();
+                    CashReceived = new CashRegister(CashDenomination.ALL_DONOMINATIONS);
+                    CashChange = new CashRegister(CashDenomination.ALL_DONOMINATIONS);
                     _messages.Add("Please select a product:");
                     break;
                 case MachineState.EnterQuantity:
@@ -77,12 +79,21 @@ namespace Acme.VendingMachine.Model
                 case MachineState.ConfirmTransaction:
                     ConfirmTransaction();
                     break;
+                case MachineState.Dispense:
+                    SwitchState(MachineState.SelectProduct);
+                    break;
             }
         }
 
         public void Cancel()
         {
-            SwitchState(MachineState.SelectProduct);
+            if (Transaction.PaymentMetthod == PaymentMethod.Cash)
+            {
+                CashChange = CashReceived;
+                AddMessage("Return cash received");
+            }
+
+            SwitchState(MachineState.Dispense);
         }
 
         #endregion
@@ -356,7 +367,7 @@ namespace Acme.VendingMachine.Model
                 AddMessage("Dispensing Good(s) ... Please collect.");
             }
             AddMessage("");
-            SwitchState(MachineState.SelectProduct);
+            SwitchState(MachineState.Dispense);
         }
 
         #endregion

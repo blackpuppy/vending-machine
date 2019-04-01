@@ -17,9 +17,21 @@
             @await Html.PartialAsync("_CashReceiverPartial", Model.CashReceived.CashSets)
         </if>
 
-        <if include-if="@(Model.State == Acme.VendingMachine.Model.MachineState.ConfirmTransaction
+        <if include-if="@((Model.State == Acme.VendingMachine.Model.MachineState.ConfirmTransaction
+            || Model.State == Acme.VendingMachine.Model.MachineState.Dispense)
             && Model.Transaction.PaymentMetthod == Acme.VendingMachine.Model.PaymentMethod.Cash)">
             @await Html.PartialAsync("_CashDispenserPartial", Model.CashChange.CashSets)
         </if>
     </div>
 </div>
+
+<script type="text/javascript">
+    @if (Model.State == Acme.VendingMachine.Model.MachineState.Dispense)
+    {
+        @:delayInit();
+    }
+
+    function delayInit() {
+        setTimeout(() => $('#okForm').submit(), 10000);
+    }
+</script>

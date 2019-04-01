@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Acme.VendingMachine.Model
+﻿namespace Acme.VendingMachine.Model
 {
     public enum MachineState
     {
@@ -12,6 +8,6 @@ namespace Acme.VendingMachine.Model
         CollectCash,
         EnterCreditCardNumber,
         ConfirmTransaction,
-        ReturnChange,
+        Dispense,
     }
 }
