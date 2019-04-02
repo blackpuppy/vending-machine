@@ -4,7 +4,7 @@ namespace Acme.VendingMachine.Model
 {
     public class CreditCardPayment : IPayment
     {
-        private const int VALID_CARD_DIGITS = 4; // for testing
+        private const int VALID_CARD_DIGITS = 16; // for testing
 
         private string _creditCardNumber;
 
