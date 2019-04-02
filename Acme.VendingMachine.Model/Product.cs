@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Globalization;
 
 namespace Acme.VendingMachine.Model
 {
@@ -13,5 +13,17 @@ namespace Acme.VendingMachine.Model
 
         public bool SoldOut => Quantity == 0;
         public string DisplayQuantity => (Quantity == 0 ? "Sold Out" : Quantity.ToString());
+
+        public string DisplayPrice
+        {
+            get
+            {
+                //var ri = new RegionInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.LCID);
+                NumberFormatInfo LocalFormat = (NumberFormatInfo)NumberFormatInfo.CurrentInfo.Clone();
+                //LocalFormat.CurrencySymbol = ri.ISOCurrencySymbol;
+                LocalFormat.CurrencySymbol = "$";
+                return (Price / 100.0).ToString("c", LocalFormat);
+            }
+        }
     }
 }

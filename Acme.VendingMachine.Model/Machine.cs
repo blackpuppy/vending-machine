@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Acme.VendingMachine.Model
@@ -17,6 +18,8 @@ namespace Acme.VendingMachine.Model
             _messages = new List<string>();
             SwitchState(MachineState.SelectProduct);
         }
+
+        #region Object State
 
         public IList<Product> Products { get; set; }
         public Transaction Transaction { get; set; }
@@ -49,7 +52,7 @@ namespace Acme.VendingMachine.Model
                     AddMessage("Please select a payment method (1-Cash 2-Credit Card):");
                     break;
                 case MachineState.CollectCash:
-                    AddMessage(string.Format("Please put cash in the cash collector for the amount Due: {0}", Transaction.AmountDue));
+                    AddMessage(string.Format("Please put cash in the cash collector for the amount Due: {0}", FormatAmount(Transaction.AmountDue)));
                     break;
                 case MachineState.EnterCreditCardNumber:
                     AddMessage("Please enter credit card number:");
@@ -164,6 +167,8 @@ namespace Acme.VendingMachine.Model
 
         #endregion
 
+        #endregion
+
         #region Select Product
 
         public void SelectProduct()
@@ -219,7 +224,13 @@ namespace Acme.VendingMachine.Model
 
             EnsureTransaction();
 
-            int quantity = int.Parse(Input);
+            int quantity;
+            if (!int.TryParse(Input, out quantity) || quantity < 0)
+            {
+                AddMessage("Error: Wrong Quantity!");
+                SwitchState(MachineState.EnterQuantity);
+            }
+
             if (quantity > Transaction.Product.Quantity)
             {
                 AddMessage("Error: Not Enough Stock!");
@@ -228,7 +239,7 @@ namespace Acme.VendingMachine.Model
             else
             {
                 Transaction.Quantity = quantity;
-                AddMessage(string.Format("Amount Due: {0}", Transaction.AmountDue));
+                AddMessage(string.Format("Amount Due: {0}", FormatAmount(Transaction.AmountDue)));
                 SwitchState(MachineState.SelectPaymentMethod);
             }
         }
@@ -297,7 +308,7 @@ namespace Acme.VendingMachine.Model
             }
             else
             {
-                AddMessage(string.Format("Received: {0}", CashReceived.Amount));
+                AddMessage(string.Format("Received: {0}", FormatAmount(CashReceived.Amount)));
 
                 EnsureTransaction();
 
@@ -309,7 +320,7 @@ namespace Acme.VendingMachine.Model
                 payment.CalculateChange();
 
                 CashChange = payment.CashChange;
-                AddMessage(string.Format("Change: {0}", CashChange.Amount));
+                AddMessage(string.Format("Change: {0}", FormatAmount(CashChange.Amount)));
 
                 SwitchState(MachineState.ConfirmTransaction);
             }
@@ -338,7 +349,7 @@ namespace Acme.VendingMachine.Model
             }
             else
             {
-                AddMessage(string.Format("You will be charged {0}", Transaction.TotalAmountDue));
+                AddMessage(string.Format("You will be charged {0}", FormatAmount(Transaction.TotalAmountDue)));
                 SwitchState(MachineState.ConfirmTransaction);
             }
         }
@@ -357,8 +368,8 @@ namespace Acme.VendingMachine.Model
             EnsureTransaction();
             Transaction.Confirm();
 
-            AddMessage(string.Format("Total amount of {0} paid.", Transaction.TotalAmountDue));
-            if(Transaction.PaymentMetthod == PaymentMethod.Cash)
+            AddMessage(string.Format("Total amount of {0} paid.", FormatAmount(Transaction.TotalAmountDue)));
+            if (Transaction.PaymentMetthod == PaymentMethod.Cash)
             {
                 AddMessage("Dispensing Good(s) and Change ... Please collect.");
             }
@@ -368,6 +379,19 @@ namespace Acme.VendingMachine.Model
             }
             AddMessage("");
             SwitchState(MachineState.Dispense);
+        }
+
+        #endregion
+
+        #region Utilities
+
+        private string FormatAmount(int amount)
+        {
+            //var ri = new RegionInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.LCID);
+            NumberFormatInfo LocalFormat = (NumberFormatInfo)NumberFormatInfo.CurrentInfo.Clone();
+            //LocalFormat.CurrencySymbol = ri.ISOCurrencySymbol;
+            LocalFormat.CurrencySymbol = "$";
+            return (amount / 100.0).ToString("c", LocalFormat);
         }
 
         #endregion

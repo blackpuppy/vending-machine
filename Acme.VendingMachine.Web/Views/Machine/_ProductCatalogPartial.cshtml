@@ -45,11 +45,11 @@
                 <td>
                     <if include-if="@(item.Seleted)">
                         <strong>
-                            @Html.DisplayFor(modelItem => item.Price)
+                            @Html.DisplayFor(modelItem => item.DisplayPrice)
                         </strong>
                     </if>
                     <if exclude-if="@(item.Seleted)">
-                        @Html.DisplayFor(modelItem => item.Price)
+                        @Html.DisplayFor(modelItem => item.DisplayPrice)
                     </if>
                 </td>
                 <td>
